@@ -9,7 +9,7 @@ import math
 BATCH_SIZE = 32
 
 class Model:
-    def __init__(self):
+    def __init__(self,custom_epochs):
 
         self.data = dataset.Data('fashion_mnist',BATCH_SIZE)
         self.ploter = ploter.Ploter()
@@ -31,7 +31,7 @@ class Model:
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                     metrics=['accuracy'])
 
-        self.model.fit(self.data.train_dataset, epochs=20, steps_per_epoch=math.ceil(self.data.num_train_examples/BATCH_SIZE))
+        self.model.fit(self.data.train_dataset, epochs=custom_epochs, steps_per_epoch=math.ceil(self.data.num_train_examples/BATCH_SIZE))
 
         test_loss, test_accuracy = self.model.evaluate(self.data.test_dataset, steps=math.ceil(self.data.num_test_examples/BATCH_SIZE))
         print('Accuracy on test dataset:', test_accuracy)
