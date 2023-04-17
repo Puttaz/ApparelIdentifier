@@ -31,7 +31,7 @@ class Model:
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                     metrics=['accuracy'])
 
-        self.model.fit(self.data.train_dataset, epochs=2, steps_per_epoch=math.ceil(self.data.num_train_examples/BATCH_SIZE))
+        self.model.fit(self.data.train_dataset, epochs=20, steps_per_epoch=math.ceil(self.data.num_train_examples/BATCH_SIZE))
 
         test_loss, test_accuracy = self.model.evaluate(self.data.test_dataset, steps=math.ceil(self.data.num_test_examples/BATCH_SIZE))
         print('Accuracy on test dataset:', test_accuracy)
