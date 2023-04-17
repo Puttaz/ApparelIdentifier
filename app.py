@@ -5,25 +5,41 @@ from PIL import Image, ImageTk, ImageOps
 from numpy import asarray
 import numpy as np
 import tensorflow as tf
+import time
 
 import clasify
 
 class Application:
     def __init__(self):
-        self.modelClasifyer = tf.keras.models.load_model('testmodel')
-        #modelClasifyer = clasify.Model()
-        #modelClasifyer.model.save("testmodel")
+        try:
+            self.modelClasifyer = tf.keras.models.load_model('testmodel')
+        except:
+            self.modelClasifyer = clasify.Model(20)
+        
         self.labels =['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+        self.status = 'Model Loaded'
         self.my_w = tk.Tk()
         self.my_w.geometry("410x300")  # Size of the window 
         self.my_w.title('GUI')
         self.my_font1=('times', 18, 'bold')
-        self.l1 = tk.Label(self.my_w,text='Upload Files & display',width=30,font=self.my_font1)  
+        self.l1 = tk.Label(self.my_w,text='Apparal Clasifier',width=30,font=self.my_font1)  
         self.l1.grid(row=1,column=1,columnspan=4)
-        self.b1 = tk.Button(self.my_w, text='Upload Files',
-            width=20,command = lambda:self.upload_file())
+        self.b1 = tk.Button(self.my_w, text='Train Model',
+            width=20,command = lambda:self.train_model())
         self.b1.grid(row=2,column=1,columnspan=4)
+        self.l_7 = tk.Label(self.my_w,text=(self.status),width=50)
+        self.l_7.grid(row=3,column=1,columnspan=4)
+
+        self.b2 = tk.Button(self.my_w, text='Predict Apparal',
+            width=20,command = lambda:self.upload_file())
+        self.b2.grid(row=4,column=1,columnspan=4)
         self.my_w.mainloop()  # Keep the window open
+
+    def train_model(self):
+        self.modelClasifyer = clasify.Model(20)
+        self.modelClasifyer.model.save("testmodel")
+        self.status = 'Completed'
+        self.l_7.config(text = self.status)
 
     def upload_file(self):
         f_types = [('All Files', '*.*'),
@@ -33,7 +49,7 @@ class Application:
         filename = filedialog.askopenfilename(multiple=True,filetypes=f_types)
         self.clasification = ''
         col=1 # start from column 1
-        row=3 # start from row 3 
+        row=5 # start from row 3 
         for f in filename:
             img=Image.open(f) # read the image file
             img=img.resize((100,100)) # new width & height
@@ -51,7 +67,7 @@ class Application:
             self.clasification += self.clasifyImage(f) + "   "
 
         l6 = tk.Label(self.my_w,text=(self.clasification),width=50)
-        l6.grid(row=4,column=1,columnspan=4)
+        l6.grid(row=6,column=1,columnspan=4)
         
     def clasifyImage(self,filepath):
         #load the image file
