@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-class Plotter:
+class Ploter:
     def __init__(self):
         pass
 
