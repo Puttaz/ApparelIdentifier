@@ -32,7 +32,7 @@ class Application:
         self.entry.grid(row=2,column=3,columnspan=4)
 
         self.b1 = tk.Button(self.my_w, text='Train Model',
-            width=20,command = lambda:self.train_model(e1))
+            width=20,command = lambda:self.train_model(e1.get()))
         self.b1.grid(row=3,column=1,columnspan=4)
 
         self.l_7 = tk.Label(self.my_w,text=(self.status),width=50)
@@ -57,7 +57,7 @@ class Application:
         filename = filedialog.askopenfilename(multiple=True,filetypes=f_types)
         self.clasification = ''
         col=1 # start from column 1
-        row=5 # start from row 3 
+        row=6 # start from row 3 
         for f in filename:
             img=Image.open(f) # read the image file
             img=img.resize((100,100)) # new width & height
@@ -75,7 +75,7 @@ class Application:
             self.clasification += self.clasifyImage(f) + "   "
 
         l6 = tk.Label(self.my_w,text=(self.clasification),width=50)
-        l6.grid(row=6,column=1,columnspan=4)
+        l6.grid(row=7,column=1,columnspan=4)
         
     def clasifyImage(self,filepath):
         #load the image file
