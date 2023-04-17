@@ -14,7 +14,7 @@ class Application:
         try:
             self.modelClasifyer = tf.keras.models.load_model('testmodel')
         except:
-            self.modelClasifyer = clasify.Model(20)
+            self.modelClasifyer = clasify.Model(1)
         
         self.labels =['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
         self.status = 'Model Loaded'
@@ -24,19 +24,27 @@ class Application:
         self.my_font1=('times', 18, 'bold')
         self.l1 = tk.Label(self.my_w,text='Apparal Clasifier',width=30,font=self.my_font1)  
         self.l1.grid(row=1,column=1,columnspan=4)
+        self.l2 = tk.Label(self.my_w,text='Enter number of epochs',width=50)  
+        self.l2.grid(row=2,column=1,columnspan=7)
+        
+        e1=tk.IntVar()
+        self.entry= tk.Entry(self.my_w,textvariable=e1, width= 8)
+        self.entry.grid(row=2,column=3,columnspan=4)
+
         self.b1 = tk.Button(self.my_w, text='Train Model',
-            width=20,command = lambda:self.train_model())
-        self.b1.grid(row=2,column=1,columnspan=4)
+            width=20,command = lambda:self.train_model(e1.get()))
+        self.b1.grid(row=3,column=1,columnspan=4)
+
         self.l_7 = tk.Label(self.my_w,text=(self.status),width=50)
-        self.l_7.grid(row=3,column=1,columnspan=4)
+        self.l_7.grid(row=4,column=1,columnspan=4)
 
         self.b2 = tk.Button(self.my_w, text='Predict Apparal',
             width=20,command = lambda:self.upload_file())
-        self.b2.grid(row=4,column=1,columnspan=4)
+        self.b2.grid(row=5,column=1,columnspan=4)
         self.my_w.mainloop()  # Keep the window open
 
-    def train_model(self):
-        self.modelClasifyer = clasify.Model(20)
+    def train_model(self,x):
+        self.modelClasifyer = clasify.Model(x)
         self.modelClasifyer.model.save("testmodel")
         self.status = 'Completed'
         self.l_7.config(text = self.status)
@@ -49,7 +57,7 @@ class Application:
         filename = filedialog.askopenfilename(multiple=True,filetypes=f_types)
         self.clasification = ''
         col=1 # start from column 1
-        row=5 # start from row 3 
+        row=6 # start from row 3 
         for f in filename:
             img=Image.open(f) # read the image file
             img=img.resize((100,100)) # new width & height
@@ -67,7 +75,7 @@ class Application:
             self.clasification += self.clasifyImage(f) + "   "
 
         l6 = tk.Label(self.my_w,text=(self.clasification),width=50)
-        l6.grid(row=6,column=1,columnspan=4)
+        l6.grid(row=7,column=1,columnspan=4)
         
     def clasifyImage(self,filepath):
         #load the image file
