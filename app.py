@@ -25,10 +25,10 @@ class Application:
         self.my_w.geometry("410x300")  # Size of the window 
         self.my_w.title('GUI')
         self.my_font1=('times', 18, 'bold')
-        self.lable_1 = tk.Label(self.my_w,text='Apparal Clasifier',width=30,font=self.my_font1)  
+        self.lable_1 = tk.Label(self.my_w,text='APPAREL IDENTIFIER',width=30,font=self.my_font1)  
         self.lable_1.grid(row=1,column=1,columnspan=4)
-        self.lable_2 = tk.Label(self.my_w,text='Enter number of epochs',width=50)  
-        self.lable_2.grid(row=2,column=1,columnspan=7)
+        self.lable_2 = tk.Label(self.my_w,text='Enter number of epochs:',width=50)  
+        self.lable_2.grid(row=2,column=1,columnspan=5)
         
         e1=tk.IntVar()
         self.entry= tk.Entry(self.my_w,textvariable=e1, width= 8)
@@ -41,7 +41,7 @@ class Application:
         self.lable_3 = tk.Label(self.my_w,text=(self.status),width=50)
         self.lable_3.grid(row=4,column=1,columnspan=4)
 
-        self.b2 = tk.Button(self.my_w, text='Predict Apparal',
+        self.b2 = tk.Button(self.my_w, text='Predict Apparel',
             width=20,command = lambda:self.upload_file())
         self.b2.grid(row=5,column=1,columnspan=4)
         self.my_w.mainloop()  # Keep the window open
@@ -62,7 +62,7 @@ class Application:
         # type of files to select
         filename = filedialog.askopenfilename(multiple=True,filetypes=f_types)
         self.clasification = ''
-        col=1
+        col=2
         # start from column 1
         row=6
         # start from row 6
