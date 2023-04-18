@@ -12,12 +12,10 @@ class Model:
     def __init__(self,custom_epochs):
 
         self.data = dataset.Data('fashion_mnist',BATCH_SIZE)
-        self.ploter = ploter.Ploter()
-
+        #self.ploter = ploter.Ploter()
         # for image, label in data.test_dataset.take(1):
         #     break
         # image = image.numpy().reshape((28,28))
-
         # self.ploter.plotImage(image,plt.cm.binary)
         # self.ploter.plotImageSet(data.train_dataset,20,plt.cm.binary,data.class_names)
 
@@ -31,9 +29,11 @@ class Model:
                     loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                     metrics=['accuracy'])
 
-        self.model.fit(self.data.train_dataset, epochs=custom_epochs, steps_per_epoch=math.ceil(self.data.num_train_examples/BATCH_SIZE))
+        self.model.fit(self.data.train_dataset, epochs=custom_epochs,
+                        steps_per_epoch=math.ceil(self.data.num_train_examples/BATCH_SIZE))
 
-        test_loss, test_accuracy = self.model.evaluate(self.data.test_dataset, steps=math.ceil(self.data.num_test_examples/BATCH_SIZE))
+        test_loss, test_accuracy = self.model.evaluate(
+            self.data.test_dataset, steps=math.ceil(self.data.num_test_examples/BATCH_SIZE))
         print('Accuracy on test dataset:', test_accuracy)
         print('Loss on test dataset:', test_loss)
 
@@ -49,9 +49,3 @@ class Model:
 
     def predict(self,image):
         return self.model.predict(image)
-
-
-#__main__ function
-if __name__ == "__main__":
-    modelClasifyer = Model()
-    modelClasifyer.model.save("testmodel")

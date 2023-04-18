@@ -24,3 +24,12 @@ class Ploter:
             plt.imshow(image, cmap=colormap)
             plt.xlabel(classnames[label])
         plt.show()
+
+    def plot_value_array(self,predictions_array):
+        # plt.yticks([])
+        plt.figure().set_figwidth(15)
+        plt.xticks(range(10),['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot'])
+        plot = plt.bar(range(10), predictions_array, color="#666666")
+        predicted = np.argmax(predictions_array)
+        plot[predicted].set_color('green')
+        plt.show()
